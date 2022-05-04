@@ -8,6 +8,7 @@ import {
   TextInputChangeEventData,
   NativeSyntheticEvent,
   ScrollView,
+  FlatList,
 } from "react-native";
 
 export default function App() {
@@ -40,15 +41,18 @@ export default function App() {
         <Button onPress={addGoalHandler} title="Add Goal" />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView>
-          {courseGoals.map((goal, index) => {
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
             return (
-              <View style={styles.goalItem} key={`goal${index}`}>
-                <Text style={styles.goalText}>{goal}</Text>
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>{itemData.item}</Text>
               </View>
             );
-          })}
-        </ScrollView>
+          }}
+          keyExtractor={(item, index) => `${item}${index}`}
+          alwaysBounceVertical={false}
+        />
       </View>
     </View>
   );
