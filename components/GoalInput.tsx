@@ -7,6 +7,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   Modal,
+  Image,
 } from "react-native";
 
 const GoalInput: FC<{
@@ -28,6 +29,10 @@ const GoalInput: FC<{
   return (
     <Modal visible={props.showModal} animationType="slide">
       <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require("../assets/images/goal.png")}
+        />
         <TextInput
           style={styles.textInput}
           placeholder="Your Course Goals"
@@ -36,10 +41,14 @@ const GoalInput: FC<{
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button onPress={addGoalHandler} title="Add Goal" />
+            <Button
+              title="Cancel"
+              onPress={props.onToggleModal}
+              color="#f31282"
+            />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={props.onToggleModal} />
+            <Button onPress={addGoalHandler} title="Add Goal" color="#a671ec" />
           </View>
         </View>
       </View>
@@ -52,16 +61,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 24,
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    paddingBottom: "40%",
+    backgroundColor: "#311b6b",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 20,
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: "#e4d0ff",
+    backgroundColor: "#e4d0ff",
     width: "100%",
-    padding: 8,
+    borderRadius: 6,
+    padding: 16,
+    color: "#120438",
   },
   buttonContainer: {
     marginTop: 16,
