@@ -7,6 +7,7 @@ import {
   TextInput,
   TextInputChangeEventData,
   NativeSyntheticEvent,
+  ScrollView,
 } from "react-native";
 
 export default function App() {
@@ -34,17 +35,20 @@ export default function App() {
           style={styles.textInput}
           placeholder="Your Course Goals"
           onChange={goalInputHandler}
+          value={enteredGoalText}
         />
         <Button onPress={addGoalHandler} title="Add Goal" />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal, index) => {
-          return (
-            <View style={styles.goalItem} key={`goal${index}`}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-          );
-        })}
+        <ScrollView>
+          {courseGoals.map((goal, index) => {
+            return (
+              <View style={styles.goalItem} key={`goal${index}`}>
+                <Text style={styles.goalText}>{goal}</Text>
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
     </View>
   );
