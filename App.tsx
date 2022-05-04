@@ -20,8 +20,11 @@ export default function App() {
   };
 
   const addGoalHandler = () => {
-    setCourseGoals(currentCourseGoals => [...currentCourseGoals, enteredGoalText]);
-    setEnteredGoalText('');
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      enteredGoalText,
+    ]);
+    setEnteredGoalText("");
   };
 
   return (
@@ -36,7 +39,11 @@ export default function App() {
       </View>
       <View style={styles.goalsContainer}>
         {courseGoals.map((goal, index) => {
-          return <Text key={`goal${index}`}>{goal}</Text>
+          return (
+            <View style={styles.goalItem} key={`goal${index}`}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+          );
         })}
       </View>
     </View>
@@ -67,5 +74,14 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+  goalText: {
+    color: "#fff",
   },
 });
