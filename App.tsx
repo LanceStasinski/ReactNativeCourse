@@ -1,23 +1,28 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInputChangeEventData,
-  NativeSyntheticEvent,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
+interface Goal {
+  text: string;
+  id: string;
+}
+
 export default function App() {
-  const [courseGoals, setCourseGoals] = useState<string[]>([]);
+  const [courseGoals, setCourseGoals] = useState<Goal[]>([]);
 
   const addGoalHandler = (enteredGoalText: string) => {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      enteredGoalText,
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
+  };
+
+  const deleteGoalHandler = (id: string) => {
+    setCourseGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== id);
+    });
   };
 
   return (
@@ -27,9 +32,15 @@ export default function App() {
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return <GoalItem item={itemData.item} />;
+            return (
+              <GoalItem
+                id={itemData.item.id}
+                item={itemData.item.text}
+                onDelete={deleteGoalHandler}
+              />
+            );
           }}
-          keyExtractor={(item, index) => `${item}${index}`}
+          keyExtractor={(item, index) => item.id}
           alwaysBounceVertical={false}
         />
       </View>

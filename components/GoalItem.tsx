@@ -1,11 +1,19 @@
 import { FC } from "react";
-import { StyleSheet, View, Text, ListRenderItemInfo } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
-const GoalItem: FC<{item: string}> = (props) => {
+const GoalItem: FC<{
+  item: string;
+  id: string;
+  onDelete: (id: string) => void;
+}> = (props) => {
+  
+
   return (
-    <View style={styles.goalItem}>
-      <Text style={styles.goalText}>{props.item}</Text>
-    </View>
+    <Pressable onPress={props.onDelete.bind(this, props.id)}>
+      <View style={styles.goalItem}>
+        <Text style={styles.goalText}>{props.item}</Text>
+      </View>
+    </Pressable>
   );
 };
 
