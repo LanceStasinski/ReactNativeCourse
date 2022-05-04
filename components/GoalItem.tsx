@@ -6,26 +6,31 @@ const GoalItem: FC<{
   id: string;
   onDelete: (id: string) => void;
 }> = (props) => {
-  
-
   return (
-    <Pressable onPress={props.onDelete.bind(this, props.id)}>
-      <View style={styles.goalItem}>
+    <View style={styles.goalItem}>
+      <Pressable
+        onPress={props.onDelete.bind(this, props.id)}
+        android_ripple={{ color: "#1f0246" }}
+        style={ pressedData => pressedData.pressed && styles.pressedItem}
+      >
         <Text style={styles.goalText}>{props.item}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   goalItem: {
     margin: 8,
-    padding: 8,
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
+  pressedItem: {
+    opacity: 0.5,
+  },
   goalText: {
     color: "#fff",
+    padding: 8,
   },
 });
 
