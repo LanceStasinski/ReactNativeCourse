@@ -1,52 +1,33 @@
 import { useState } from "react";
 import {
-  Button,
   StyleSheet,
   View,
-  TextInput,
   TextInputChangeEventData,
   NativeSyntheticEvent,
   FlatList,
 } from "react-native";
 
 import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState<string[]>([]);
 
-  const goalInputHandler = (
-    enteredText: NativeSyntheticEvent<TextInputChangeEventData>
-  ) => {
-    setEnteredGoalText(enteredText.nativeEvent.text);
-  };
-
-  const addGoalHandler = () => {
+  const addGoalHandler = (enteredGoalText: string) => {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
       enteredGoalText,
     ]);
-    setEnteredGoalText("");
   };
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your Course Goals"
-          onChange={goalInputHandler}
-          value={enteredGoalText}
-        />
-        <Button onPress={addGoalHandler} title="Add Goal" />
-      </View>
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return (
-              <GoalItem item={itemData.item}/>
-            );
+            return <GoalItem item={itemData.item} />;
           }}
           keyExtractor={(item, index) => `${item}${index}`}
           alwaysBounceVertical={false}
@@ -62,24 +43,7 @@ const styles = StyleSheet.create({
     padding: 50,
     paddingHorizontal: 16,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
-  },
   goalsContainer: {
     flex: 5,
   },
-  
 });
