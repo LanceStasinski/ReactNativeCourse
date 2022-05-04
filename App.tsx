@@ -11,6 +11,8 @@ import {
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setCourseGoals] = useState<string[]>([]);
+
   const goalInputHandler = (
     enteredText: NativeSyntheticEvent<TextInputChangeEventData>
   ) => {
@@ -18,7 +20,8 @@ export default function App() {
   };
 
   const addGoalHandler = () => {
-    console.log(enteredGoalText)
+    setCourseGoals(currentCourseGoals => [...currentCourseGoals, enteredGoalText]);
+    setEnteredGoalText('');
   };
 
   return (
@@ -32,7 +35,9 @@ export default function App() {
         <Button onPress={addGoalHandler} title="Add Goal" />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of Goals</Text>
+        {courseGoals.map((goal, index) => {
+          return <Text key={`goal${index}`}>{goal}</Text>
+        })}
       </View>
     </View>
   );
